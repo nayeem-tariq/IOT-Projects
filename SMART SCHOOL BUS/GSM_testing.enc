@@ -1,0 +1,73 @@
+#include <SoftwareSerial.h>
+
+SoftwareSerial mySerial(2,3);
+
+void setup() {
+ mySerial.begin(9600);
+ Serial.begin(9600); 
+  delay(100);
+  
+  //Serial.print(mySerial.println("AT+CSQ"));
+}
+
+void loop() {
+  if (Serial.available()>0)
+  switch(Serial.read())
+  {
+    case 's':
+    {  SendMessage();
+  Serial.print(mySerial.println("AT+CSQ"));
+      break;}
+    case 'c':
+     { 
+      delay(2);
+      Call();
+  Serial.print(mySerial.println("AT+CSQ"));
+      break;}
+     case 'r':
+    {  mySerial.println("ATA"); 
+  //Serial.print(mySerial.println("AT+CSQ"));
+      break;}
+    case 'd':
+    {  mySerial.println("ATH"); 
+  //Serial.print(mySerial.println("AT+CSQ"));
+      break;}
+  }
+
+  if (mySerial.available()>0)
+   Serial.write(mySerial.read());
+
+}
+
+
+void SendMessage()
+{
+  Serial.print("hfhjfj");
+  mySerial.println("AT+CMGF=1"); 
+  delay(1000);
+  mySerial.println("AT+CMGS=\"+917006293351\"\r");
+  delay(1000);
+  mySerial.println("testing GSM");
+  delay(100);
+  mySerial.println((char)26);
+  delay(1000);
+}
+
+void Call()
+{
+  mySerial.println("ATE0\r\n");  
+  delay(1000);
+  ShowSerialData();
+  mySerial.println("AT\r\n");
+  delay(1000);
+  ShowSerialData();
+  mySerial.println("ATD+91109157256;\r\n");
+  delay(1000);
+  ShowSerialData();
+ }
+
+void ShowSerialData()
+{
+  while(mySerial.available()!=0)
+    Serial.write(mySerial.read());
+}

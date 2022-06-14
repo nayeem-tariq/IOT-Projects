@@ -1,0 +1,40 @@
+ 
+#include <SoftwareSerial.h>
+#include <String.h>
+ 
+SoftwareSerial mySerial(2, 3);
+
+void setup()
+{
+  mySerial.begin(9600);               // the GPRS baud rate   
+  Serial.begin(9600);    // the GPRS baud rate 
+// delay(1000);
+}
+ 
+void loop()
+{
+
+      delay(2);          
+     Call();
+     delay(9000);
+  if (mySerial.available())
+    Serial.write(mySerial.read());
+}
+void Call()
+{
+  mySerial.println("ATE0\r\n");    //enable echo mode  
+  delay(1000);  // Delay of 1000 milli seconds or 1 second
+  ShowSerialData();
+ mySerial.println("AT\r\n");    //check At command
+  delay(1000);  // Delay of 1000 milli seconds or 1 second
+  ShowSerialData();
+ mySerial.println("ATD+918109157256;\r\n"); // set gsm to msg mode
+  delay(1000);
+ShowSerialData();
+ }
+
+void ShowSerialData()
+{
+  while(mySerial.available()!=0)
+    Serial.write(mySerial.read());
+}

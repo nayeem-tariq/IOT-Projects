@@ -1,0 +1,2 @@
+https://learn.adafruit.com/adafruit-max31865-rtd-pt100-amplifier/arduino-code
+https://learn.adafruit.com/adafruit-max31865-rtd-pt100-amplifier/pinouts
